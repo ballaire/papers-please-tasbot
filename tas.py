@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2024 thatsOven
+# Copyright (c) 2024 thatsOven, Bryan Allaire
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -2076,6 +2076,7 @@ class TAS:
             print("Invalid input.")
 
     def run(self) -> None:
+        pg.useImageNotFoundException(False)
         while True:
             i   = TAS.select("Select run:", [run.__class__.__name__ for run in TAS.RUNS])
             act = TAS.select("Select action:", ["Run", "Test", "View credits"])
