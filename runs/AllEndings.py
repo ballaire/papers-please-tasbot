@@ -21,12 +21,12 @@ class Day31EscapeMode(Enum):
 class AllEndings(Run):
     @staticmethod
     def description():
-        return "** All Endings speedrun **\nStrategy: HowToCantaloupe\nCode: thatsOven"
+        return "** All Endings speedrun **\nStrategy: HowToCantaloupe\nCode: Amari Calipso"
 
-    DAY_12 = date(1982, 12,  4) 
-    DAY_23 = date(1982, 12, 15) 
+    DAY_12 = date(1982, 12,  4)
+    DAY_23 = date(1982, 12, 15)
     DAY_30 = date(1982, 12, 22)
-    DAY_31 = date(1982, 12, 23) 
+    DAY_31 = date(1982, 12, 23)
 
     def day1(self):
         self.tas.daySetup()
@@ -39,7 +39,7 @@ class AllEndings(Run):
         self.tas.day1Check()
 
         # "it was a mistake to open this checkpoint"
-        self.tas.nextPartial() 
+        self.tas.nextPartial()
 
         for _ in range(7):
             self.tas.day1Check()
@@ -50,7 +50,7 @@ class AllEndings(Run):
         self.tas.waitForAllTicks()
         self.tas.clickOnTick("food")
         self.tas.clickOnTick("heat")
-        
+
         self.tas.dayEnd()
 
     def day2(self, *, ending1):
@@ -69,19 +69,19 @@ class AllEndings(Run):
             self.tas.passportOnlyAllow()
             self.tas.passportOnlyDeny()
 
-        self.tas.passportOnlyDeny() 
+        self.tas.passportOnlyDeny()
 
         # process last person and wait
         self.tas.checkDayEnd = True
         self.tas.day2Check(wrong = ending1)
         self.tas.waitForSleepButton()
-        
+
         if not ending1:
             self.tas.waitForAllTicks()
             self.tas.clickOnTick("food")
             self.tas.clickOnTick("heat")
             self.tas.clickOnTick("medicineSon")
-        
+
         self.tas.dayEnd()
 
     def day3(self):
@@ -120,9 +120,9 @@ class AllEndings(Run):
         for _ in range(3):
             self.tas.day4Check()
             self.tas.multiDocAction(False)
-        
+
         # jorji with fake passport, allow so he doesn't come back later
-        self.tas.passportOnlyAllow() 
+        self.tas.passportOnlyAllow()
 
         self.tas.day4Check()
 
@@ -172,7 +172,7 @@ class AllEndings(Run):
 
         self.tas.checkDayEnd = True
         self.tas.day6Check() # last check before attack for money
-        
+
         self.tas.waitForSleepButton()
         self.tas.dayEnd()
 
@@ -200,7 +200,7 @@ class AllEndings(Run):
 
         for _ in range(3):
             self.tas.day8Check()
-            
+
         self.tas.multiDocAction(True)
 
         self.tas.checkDayEnd = True
@@ -223,7 +223,7 @@ class AllEndings(Run):
 
         self.tas.multiDocAction(False)
         self.tas.multiDocAction(False)
-            
+
         # agent (gives real and fake documents)
         self.tas.nextPartial()
         for i in range(2):
@@ -241,10 +241,10 @@ class AllEndings(Run):
         self.tas.dragToWithGive(PERSON_POS)
 
         self.tas.multiDocAction(False)
-        
+
         # corman drex
         self.tas.next()
-        tmp = self.tas.lastGiveArea 
+        tmp = self.tas.lastGiveArea
         self.tas.moveTo(SLOTS[-1])
         self.tas.dragTo(PERSON_POS) # give them ezic paper
         self.tas.waitForGiveAreaChange() # wait for them to give message
@@ -253,7 +253,7 @@ class AllEndings(Run):
         self.tas.prepareItem(PAPER_POS) # move to temp slot
         # process their papers
         self.tas.lastGiveArea = tmp
-        self.tas.multiDocAction(True, nextCheck = False) 
+        self.tas.multiDocAction(True, nextCheck = False)
 
         self.tas.checkDayEnd = True
         self.setupFastChecks()
@@ -272,7 +272,7 @@ class AllEndings(Run):
 
         # this is actually scripted to be wrong,
         # but letting them through saves time with calensk later on
-        self.tas.multiDocAction(True, force = True) 
+        self.tas.multiDocAction(True, force = True)
 
         self.tas.day8Check()
         self.tas.day8Check()
@@ -297,7 +297,7 @@ class AllEndings(Run):
 
         # calensk (just wait)
         self.tas.nextPartial()
-        
+
         self.tas.multiDocAction(False)
         self.tas.passportOnlyDeny() # ezic
         self.tas.multiDocAction(False)
@@ -336,7 +336,7 @@ class AllEndings(Run):
 
             self.tas.waitForGiveAreaChange(sleep = False)
             return
-        
+
         # give vonel back badge and drawing
         before = np.asarray(self.tas.getScreen().crop(GIVE_AREA))
         self.tas.dragTo(PAPER_POS)
@@ -404,14 +404,14 @@ class AllEndings(Run):
         if messenger: self.tas.ezicMessenger()
         elif safe:    self.tas.day13Check()
         else:         self.tas.multiDocAction(False)
-            
-        if safe: 
+
+        if safe:
             self.tas.day13Check()
             self.tas.day13Check()
-        else:    
+        else:
             self.tas.multiDocAction(True)
             self.tas.multiDocAction(False)
-            
+
         self.tas.knownCriminal(self.tas.day13Check)
 
         # person with two passports
@@ -446,7 +446,7 @@ class AllEndings(Run):
         self.tas.lastGiveArea = np.asarray(self.tas.getScreen().crop(GIVE_AREA))
         # give them coded papers
         for _ in range(2):
-            self.tas.moveTo((510, 375)) 
+            self.tas.moveTo((510, 375))
             self.tas.dragTo(PAPER_POS)
         self.tas.giveAllGiveAreaDocs(self.tas.lastGiveArea)
         # wait for message
@@ -501,9 +501,9 @@ class AllEndings(Run):
         for _ in range(3):
             self.tas.day13Check()
 
-        self.tas.multiDocAction(True) # journalist 
+        self.tas.multiDocAction(True) # journalist
         self.tas.day13Check()
-        
+
         if ezic: self.tas.passportOnlyAllow()
         else:    self.tas.passportOnlyDeny()
 
@@ -518,14 +518,14 @@ class AllEndings(Run):
 
         for _ in range(7):
             # forced cause denying has longer dialogue
-            self.tas.multiDocAction(True, force = True) 
+            self.tas.multiDocAction(True, force = True)
 
         # attack
         self.tas.next()
         self.tas.getTranqGun()
         # wait for them to throw grenade (poor sergiu :c)
         self.tas.waitForAreaChange(ATTACKER_GRENADE_DETECT_ZONE)
-        time.sleep(2) 
+        time.sleep(2)
         self.tas.click(centerOf(ATTACKER_GRENADE_DETECT_ZONE)) # shoot
 
         self.tas.waitForSleepButton()
@@ -571,7 +571,7 @@ class AllEndings(Run):
         if not poison4:
             for _ in range(5):
                 self.tas.multiDocAction(True)
-            
+
         # give poison
         self.tas.poison = True
         self.tas.multiDocAction(False) # this leads to a citation but the cutscene is shorter
@@ -613,7 +613,7 @@ class AllEndings(Run):
         for pos in self.tas.detectPeople(GUARDS_AREA, tranq = True):
             self.tas.click(offsetPoint(pos, (-5, 0)))
 
-        self.tas.waitForSleepButton()        
+        self.tas.waitForSleepButton()
         self.tas.dayEnd()
 
     def day22(self, *, pennantOnWall):
@@ -621,7 +621,7 @@ class AllEndings(Run):
 
         # prepare pennant
         if pennantOnWall:
-            self.tas.prepareItem(PERSON_POS) 
+            self.tas.prepareItem(PERSON_POS)
         else:
             self.tas.prepareItem((530, 265))
 
@@ -635,7 +635,7 @@ class AllEndings(Run):
         # wait for dialogue
         tmp = self.tas.lastGiveArea
         self.tas.waitForGiveAreaChange()
-        # take money 
+        # take money
         self.tas.moveTo(PAPER_POS)
         self.tas.dragTo(SLOTS[-2])
         # allow and give them pennant and id card
@@ -652,7 +652,7 @@ class AllEndings(Run):
         while self.tas.day21Check(): pass
 
         self.tas.dayEnd()
-    
+
     def day23(self, *, mode: Day23Mode):
         self.tas.daySetup()
 
@@ -673,7 +673,7 @@ class AllEndings(Run):
         if mode == Day23Mode.KILL_RED:
             self.tas.getSniper()
             self.tas.click((395, 115)) # shoot attacker
-        else: 
+        else:
             self.tas.getTranqGun()
             time.sleep(0.25)
             self.tas.click((385, 115)) # shoot attacker
@@ -715,7 +715,7 @@ class AllEndings(Run):
         # shae piersovska
         if shae: self.tas.multiDocAction(True)
         else:
-            self.tas.detain = True    
+            self.tas.detain = True
             self.tas.noPictureCheck(self.tas.day21Check)
 
         self.tas.checkDayEnd = True
@@ -749,7 +749,7 @@ class AllEndings(Run):
         self.tas.click((470, 125))
         self.tas.click((705, 145))
         self.tas.click((620, 195))
-        
+
         self.tas.waitForSleepButton()
 
         if not bills:
@@ -783,12 +783,12 @@ class AllEndings(Run):
             self.tas.moveTo(self.tas.waitFor(self.tas.PASSPORT_KORDON_KALLO))
             self.tas.dragToWithGive(PERSON_PASSPORT_POS)
             # wait for them to give it back
-            self.tas.waitForGiveAreaChange(sleep = False) 
+            self.tas.waitForGiveAreaChange(sleep = False)
             # close drawer
-            self.tas.click(PASSPORT_CONFISCATE_POS) 
+            self.tas.click(PASSPORT_CONFISCATE_POS)
             time.sleep(PASSPORT_DRAWER_CLOSE_TIME)
             # allow
-            self.tas.passportOnlyAllow(nextCheck = False) 
+            self.tas.passportOnlyAllow(nextCheck = False)
 
         self.tas.checkDayEnd = True
         while self.tas.day27Check(): pass
@@ -827,9 +827,9 @@ class AllEndings(Run):
                 self.tas.click((900, 123)) # shoot center guard
             case Day28Mode.DEFAULT:
                 # shoot intruder
-                self.tas.click((820, 190)) 
-                self.tas.click((815, 190)) 
-                self.tas.click((810, 190)) 
+                self.tas.click((820, 190))
+                self.tas.click((815, 190))
+                self.tas.click((810, 190))
 
                 self.tas.waitForSleepButton()
 
@@ -847,16 +847,16 @@ class AllEndings(Run):
         # vonel (just wait)
 
         self.tas.day27Check()
-        
+
         # jorji
         self.tas.multiDocAction(True)
         # wait for him to give passport
-        self.tas.waitForGiveAreaChange() 
+        self.tas.waitForGiveAreaChange()
         # give him back flier
         self.tas.moveTo(PAPER_POS)
-        self.tas.dragToWithGive(PERSON_PASSPORT_POS) 
+        self.tas.dragToWithGive(PERSON_PASSPORT_POS)
         # close drawer
-        self.tas.click(PASSPORT_CONFISCATE_POS) 
+        self.tas.click(PASSPORT_CONFISCATE_POS)
 
         self.tas.day27Check()
         self.tas.day27Check()
@@ -885,7 +885,7 @@ class AllEndings(Run):
             self.tas.moveTo((550, 270))
             self.tas.dragTo(PERSON_POS)
             return
-        
+
         # supervisor (just wait)
 
         self.tas.day27Check()
@@ -899,10 +899,10 @@ class AllEndings(Run):
 
             self.tas.next()
             # close drawer
-            self.tas.click(PASSPORT_CONFISCATE_POS) 
+            self.tas.click(PASSPORT_CONFISCATE_POS)
             time.sleep(PASSPORT_DRAWER_CLOSE_TIME)
             self.tas.day27Check(nextCheck = False)
-        else: 
+        else:
             self.tas.knownCriminal(self.tas.day27Check)
             self.tas.day27Check()
 
@@ -911,7 +911,7 @@ class AllEndings(Run):
 
         # father
         self.tas.nextPartial()
-        if not givePhoto: 
+        if not givePhoto:
             # give picture back
             self.tas.moveTo((435, 400))
             self.tas.dragToWithGive(PERSON_POS)
@@ -943,14 +943,14 @@ class AllEndings(Run):
 
         # attack
         self.tas.next()
-        if shootMode != Day31ShootMode.NO: 
+        if shootMode != Day31ShootMode.NO:
             self.tas.getTranqGun()
             self.tas.click((685, 195)) # shoot bottom attacker
 
         match shootMode:
             case Day31ShootMode.SAVE_WALL:
                 # shoot other attacker (two shots to be safe)
-                self.tas.click((570, 95)) 
+                self.tas.click((570, 95))
                 self.tas.click((565, 95))
             case Day31ShootMode.YES:
                 # shoot after wall is gone
@@ -959,7 +959,7 @@ class AllEndings(Run):
                 self.tas.waitForAreaChange(ATTACKER_DETONATE_DETECT_ZONE) # wait for attacker to go back and detonate
                 time.sleep(3)
                 self.tas.click(centerOf(ATTACKER_DETONATE_DETECT_ZONE))
-        
+
         self.tas.waitForSleepButton()
 
         if escapeMode != Day31EscapeMode.NO:
@@ -1015,11 +1015,11 @@ class AllEndings(Run):
         self.day23(mode = Day23Mode.KILL_RED)
         self.tas.ending9()
 
-        self.tas.restartFrom((DAYS_X[-1], DAYS_Y[1]), AllEndings.DAY_23) 
+        self.tas.restartFrom((DAYS_X[-1], DAYS_Y[1]), AllEndings.DAY_23)
         self.day23(mode = Day23Mode.TRANQ_RED)
         self.tas.ending10()
 
-        self.tas.restartFrom((DAYS_X[-1], DAYS_Y[1]), AllEndings.DAY_23) 
+        self.tas.restartFrom((DAYS_X[-1], DAYS_Y[1]), AllEndings.DAY_23)
         self.day23(mode = Day23Mode.DEFAULT)
         self.day24()
         self.day25(shae = False, bills = True)
@@ -1031,7 +1031,7 @@ class AllEndings(Run):
         self.day26(ending12 = False, bills = False)
         self.day27(ezic = True, bills = False)
         self.day28(mode = Day28Mode.KILL_CIVILIAN, bills = True)
-        self.tas.ending5() 
+        self.tas.ending5()
 
         self.tas.restartFrom((DAYS_X[-1], DAYS_Y[2]), self.tas.DAY_28)
         self.day28(mode = Day28Mode.TRANQ_CIVILIAN, bills = True)
